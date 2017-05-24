@@ -40,6 +40,8 @@ public class Scheduler {
         while (!(stopScheduler && callbacks.isEmpty())) {
             checkRunRemove();
             long timeWait = minDelay() - System.currentTimeMillis();
+            if(timeWait<0)
+                continue;
             try {
                 synchronized (this) {
                     wait(timeWait);

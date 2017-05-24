@@ -2,8 +2,7 @@ package pl.codewise.internship;
 
 import org.junit.Test;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -30,5 +29,15 @@ public class SchedulerTest {
         scheduler.stop(id);
         Thread.sleep(1000);
         scheduler.stopScheduler();
+    }
+
+    @Test
+    public void stressTest() throws Exception {
+        Random random = new Random();
+        for(int i=0;i<1000;i++){
+            final int a=i;
+            scheduler.start(()->System.out.println(a), random.nextLong()%10000);
+        }
+        Thread.sleep(15000);
     }
 }
